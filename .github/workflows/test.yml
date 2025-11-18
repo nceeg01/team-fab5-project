@@ -1,0 +1,42 @@
+# Team Member: Backend Developer / Project Manager
+# Purpose: GitHub Actions CI/CD workflow for automated testing
+# Related Files: test.js (test suite to run)
+# Triggers: Runs on every push to main and every pull request to main
+
+name: Tests
+
+# When to run the workflow
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+# Jobs to run
+jobs:
+  test:
+    # Run on latest Ubuntu
+    runs-on: ubuntu-latest
+
+    # Steps to execute
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      # Step 3: Run tests
+      - name: Run tests
+        run: node test.js
+
+      # Step 4: Display test results (optional - for better visibility)
+      - name: Test Results
+        if: always()
+        run: |
+          echo "Tests completed. Check output above for results."
+
