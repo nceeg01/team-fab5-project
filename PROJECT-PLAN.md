@@ -1,11 +1,11 @@
 # Project Plan (Skeleton Version)
 
 ## Project Overview
-- Team Name
-- Project Name
+- Team Name- fab-5
+- Project Name- campus weather widget
 - Tech Stack
 - Timeline
-- Goal
+- Goal- MVP
 
 ## User Stories (MVP)
 1. Search for Weather
