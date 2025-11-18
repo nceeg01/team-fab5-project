@@ -1,0 +1,201 @@
+<!--
+Team Member: Frontend Developer
+Purpose: Modern, visually stunning weather application with dynamic backgrounds and advanced features
+Related Files: styles.css (styling), app.js (interactivity), weather-api.js (data)
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Modern Weather App - Beautiful, dynamic weather experience">
+    <title>Weather App - Modern & Beautiful</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Dynamic Background with Particles -->
+    <div id="weatherBackground" class="weather-background">
+        <canvas id="particleCanvas" class="particle-canvas"></canvas>
+    </div>
+
+    <!-- Main Container -->
+    <div class="app-container">
+        <!-- Header with Search -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="app-title">Weather</h1>
+                <div class="search-wrapper">
+                    <form id="searchForm" class="search-form" role="search">
+                        <div class="search-container">
+                            <input 
+                                type="text" 
+                                id="cityInput" 
+                                class="search-input" 
+                                placeholder="Search city..."
+                                autocomplete="off"
+                                aria-label="Search for city weather"
+                            >
+                            <button type="submit" class="search-icon-btn" aria-label="Search">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <path d="m21 21-4.35-4.35"></path>
+                                </svg>
+                            </button>
+                            <!-- Autocomplete Dropdown -->
+                            <div id="autocompleteDropdown" class="autocomplete-dropdown" aria-hidden="true"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Current Weather Section -->
+            <section id="currentWeather" class="current-weather-section" aria-hidden="true">
+                <div class="glass-card main-weather-card">
+                    <div class="location-info">
+                        <h2 id="currentCity" class="city-name"></h2>
+                        <p id="currentDate" class="current-date"></p>
+                    </div>
+                    
+                    <div class="temperature-display">
+                        <div class="temp-main">
+                            <span id="currentTemp" class="temperature-large"></span>
+                            <span class="temp-unit">°C</span>
+                        </div>
+                        <div class="weather-icon-container">
+                            <img id="weatherIcon" src="" alt="Weather icon" class="weather-icon-large">
+                            <p id="weatherDescription" class="weather-desc"></p>
+                        </div>
+                    </div>
+
+                    <div class="feels-like">
+                        <span>Feels like</span>
+                        <span id="feelsLike" class="feels-like-temp"></span>
+                    </div>
+                </div>
+
+                <!-- Quick Stats Grid -->
+                <div class="quick-stats-grid">
+                    <div class="glass-card stat-card">
+                        <div class="stat-icon">💧</div>
+                        <div class="stat-content">
+                            <div class="stat-label">Humidity</div>
+                            <div id="humidity" class="stat-value"></div>
+                        </div>
+                    </div>
+                    <div class="glass-card stat-card">
+                        <div class="stat-icon">💨</div>
+                        <div class="stat-content">
+                            <div class="stat-label">Wind</div>
+                            <div id="windSpeed" class="stat-value"></div>
+                        </div>
+                    </div>
+                    <div class="glass-card stat-card">
+                        <div class="stat-icon">👁️</div>
+                        <div class="stat-content">
+                            <div class="stat-label">Visibility</div>
+                            <div id="visibility" class="stat-value"></div>
+                        </div>
+                    </div>
+                    <div class="glass-card stat-card">
+                        <div class="stat-icon">☀️</div>
+                        <div class="stat-content">
+                            <div class="stat-label">UV Index</div>
+                            <div id="uvIndex" class="stat-value"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Info Cards -->
+                <div class="detailed-cards-grid">
+                    <div class="glass-card detail-card">
+                        <div class="detail-header">
+                            <span class="detail-icon">🌅</span>
+                            <span class="detail-title">Sunrise</span>
+                        </div>
+                        <div id="sunrise" class="detail-value"></div>
+                    </div>
+                    <div class="glass-card detail-card">
+                        <div class="detail-header">
+                            <span class="detail-icon">🌇</span>
+                            <span class="detail-title">Sunset</span>
+                        </div>
+                        <div id="sunset" class="detail-value"></div>
+                    </div>
+                    <div class="glass-card detail-card">
+                        <div class="detail-header">
+                            <span class="detail-icon">📊</span>
+                            <span class="detail-title">Pressure</span>
+                        </div>
+                        <div id="pressure" class="detail-value"></div>
+                    </div>
+                    <div class="glass-card detail-card">
+                        <div class="detail-header">
+                            <span class="detail-icon">🌫️</span>
+                            <span class="detail-title">Dew Point</span>
+                        </div>
+                        <div id="dewPoint" class="detail-value"></div>
+                    </div>
+                </div>
+
+                <!-- Air Quality Card -->
+                <div class="glass-card air-quality-card">
+                    <div class="air-quality-header">
+                        <span class="air-quality-icon">🌬️</span>
+                        <span class="air-quality-title">Air Quality</span>
+                    </div>
+                    <div id="airQuality" class="air-quality-value">
+                        <span id="aqiValue" class="aqi-number"></span>
+                        <span id="aqiLabel" class="aqi-label"></span>
+                    </div>
+                    <div id="aqiDescription" class="aqi-description"></div>
+                </div>
+            </section>
+
+            <!-- Hourly Forecast Section -->
+            <section id="hourlyForecast" class="hourly-forecast-section" aria-hidden="true">
+                <div class="section-header">
+                    <h2 class="section-title">24-Hour Forecast</h2>
+                </div>
+                <div class="hourly-scroll-container">
+                    <div id="hourlyContainer" class="hourly-container">
+                        <!-- Hourly cards will be inserted here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7-Day Forecast Section -->
+            <section id="weeklyForecast" class="weekly-forecast-section" aria-hidden="true">
+                <div class="section-header">
+                    <h2 class="section-title">7-Day Forecast</h2>
+                </div>
+                <div id="weeklyContainer" class="weekly-container">
+                    <!-- Weekly forecast cards will be inserted here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Loading Overlay -->
+        <div id="loadingOverlay" class="loading-overlay" aria-hidden="true">
+            <div class="loading-content">
+                <div class="loading-spinner"></div>
+                <p class="loading-text">Loading weather data...</p>
+            </div>
+        </div>
+
+        <!-- Error Message -->
+        <div id="errorMessage" class="error-toast" role="alert" aria-live="assertive" aria-hidden="true">
+            <span class="error-icon">⚠️</span>
+            <span id="errorText" class="error-text"></span>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="config.js"></script>
+    <script src="weather-api.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
