@@ -1,4 +1,4 @@
-// Team Member: Frontend Developer
+// Team Member: Frontend Developer- Diego
 // Purpose: Modern weather app with autocomplete, dynamic backgrounds, particle effects, and advanced features
 // Related Files: index.html (DOM elements), weather-api.js (data fetching), styles.css (styling)
 
