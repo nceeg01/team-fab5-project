@@ -1,9 +1,9 @@
 # Campus Weather Widget
 
-## 📌 About
+## About
 Short description of the app, purpose, and tools used.
 
-## ✨ Features
+##  Features
 - Real-time weather
 - 5-day forecast
 - Detailed metrics
@@ -13,49 +13,49 @@ Short description of the app, purpose, and tools used.
 - Loading states
 - Accessibility
 
-## 🚀 How to Run
+## How to Run
 1. Clone repo  
 2. Get API key  
 3. Configure `config.js`  
 4. Open `index.html` or run local server  
 
-## 🎯 How to Use
+## How to Use
 - Search for a city  
 - View current weather  
 - View 5-day forecast  
 - Handle errors  
 
-## 🧪 Tests
+## Tests
 - Run: `node test.js`  
 - Includes validation, formatting, errors, functionality  
 - CI/CD runs tests on PRs and pushes  
 
-## 👥 Team Members
+## Team Members
 List of team member roles + GitHub usernames.
 
-## 🛠️ Technologies
+## Technologies
 HTML, CSS, JavaScript, OpenWeatherMap API, Git, GitHub Actions
 
-## 📸 Screenshots
+## Screenshots
 - Main Interface  
 - Current Weather  
 - Forecast  
 - Mobile View  
 
-## 🏆 What We Learned
+## What We Learned
 Summary of skills gained.
 
-## 🚧 Future Improvements
+## Future Improvements
 List of future features (geolocation, unit toggle, alerts, etc.)
 
-## 📄 License
+## License
 UNT — Fall 2025
 
-## 🔗 Resources
+## Resources
 - API docs  
 - Project plan  
 - Quick start  
 - GitHub repo  
 
-## 📞 Support
+## Support
 Troubleshooting steps + GitHub issues link.
