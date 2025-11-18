@@ -1,63 +1,119 @@
-# Project Plan (Skeleton Version)
+# Project Plan (Updated)
 
 ## Project Overview
-- Team Name- fab-5
-- Project Name- campus weather widget
-- Tech Stack
-- Timeline
-- Goal- MVP
+- **Team:** Fab5
+- **Project:** Campus Weather Widget
+- **Tech Stack:** HTML, CSS, JavaScript
+- **Timeline:** 3 weeks
+- **Goal:** Build a functional weather widget with search, current conditions, and forecasts.
+
+---
 
 ## User Stories (MVP)
-1. Search for Weather
-2. Display Current Weather
-3. Show Weather Metrics
-4. 5-Day Forecast
-5. Error Handling
+
+### 1. Search for Weather
+- City search input
+- Search button
+- Validation
+- Loading indicator
+
+### 2. Display Current Weather
+- Temperature
+- Weather icon
+- Description
+- City + Date
+
+### 3. Show Weather Metrics
+- Humidity
+- Wind speed
+- Pressure
+- Feels like
+
+### 4. Display 5-Day Forecast
+- 5 forecast cards
+- Icons + temperatures
+- Dates
+
+### 5. Error Handling
+- Invalid city errors
+- Network errors
+- Friendly messages
+
+---
 
 ## Nice-to-Haves
+- Unit toggles
 - Geolocation
-- Unit Toggle
-- Favorite Cities
-- Dark/Light Theme
-- Weather Alerts
-- Hourly Forecast
+- Favorite cities
+- Theme toggle
 
-## GitHub Issues (List)
-- HTML Structure
-- CSS Styling
-- API Configuration
-- API Integration
-- UI Logic & Event Handlers
-- Current Weather Display
-- Forecast Display
-- Testing Suite
-- CI/CD Setup
-- Documentation
+---
+
+## GitHub Issues (Summary)
+1. HTML structure  
+2. CSS responsive styling  
+3. API config  
+4. API integration  
+5. UI logic  
+6. Current weather UI  
+7. Forecast UI  
+8. Testing  
+9. GitHub Actions  
+10. Documentation  
+
+---
 
 ## Sprint Planning
-- Sprint 1: Core Features
-- Sprint 2: Polish & Testing
+
+### Sprint 1 (Core Build)
+- Setup repo
+- Base HTML/CSS
+- API fetch functions
+- Current weather display
+
+### Sprint 2 (Polish)
+- Forecast
+- Error handling
+- Tests
+- CI/CD
+- Documentation
+
+---
 
 ## Team Roles
-- Frontend Developer
-- Backend Developer
-- UI/UX Designer
-- Tester/QA
-- Project Manager
+- **Frontend:** DOM + UI
+- **Backend:** API + CI/CD
+- **UI/UX:** Styling + accessibility
+- **QA:** Tests + bug reports
+- **PM:** Docs + coordination
+
+---
 
 ## Communication Plan
-- Daily Standups
-- Weekly Meetings
-- GitHub Workflow
+- Daily standups
+- Weekly sprint meetings
+- GitHub PR workflow
+- Issues + project board
+
+---
 
 ## Success Metrics
-- MVP Complete
-- Testing Coverage
-- Documentation
-- Working Demo
+- All MVP stories done
+- Tests passing
+- CI/CD active
+- Docs complete
 
-## Risk Management
-- API Issues
-- Availability Issues
-- Scope Creep
-- Technical Blockers
+---
+
+## Risks
+- API limits
+- Availability
+- Scope creep
+- Technical blockers
+
+---
+
+## Timeline
+- **Week 1:** Setup  
+- **Week 2:** Core features  
+- **Week 3:** Testing + polish  
