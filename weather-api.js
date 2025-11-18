@@ -131,6 +131,150 @@ async function fetchCurrentWeather(cityName) {
 }
 
 /**
+ * Fetches current weather data using coordinates
+ * @param {number} lat - Latitude
+ * @param {number} lon - Longitude
+ * @returns {Promise<Object>} Weather data object or throws error
+ */
+async function fetchCurrentWeatherByCoords(lat, lon) {
+    // Validate input
+    if (typeof lat !== 'number' || typeof lon !== 'number' || isNaN(lat) || isNaN(lon)) {
+        throw new Error('Valid latitude and longitude are required');
+    }
+
+    // Check if API key is configured
+    if (!CONFIG.API_KEY || CONFIG.API_KEY === 'YOUR_API_KEY_HERE') {
+        throw new Error('API key not configured. Please set your OpenWeatherMap API key in config.js');
+    }
+
+    const url = `${CONFIG.API_BASE_URL}/weather?lat=${lat}&lon=${lon}&units=${CONFIG.TEMP_UNIT}&appid=${CONFIG.API_KEY}`;
+
+    try {
+        // Create abort controller for timeout
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), CONFIG.API_TIMEOUT);
+
+        const response = await fetch(url, {
+            signal: controller.signal,
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+
+        clearTimeout(timeoutId);
+
+        // Check if response is ok
+        if (!response.ok) {
+            // Get error details from response
+            let errorDetails = '';
+            try {
+                const errorData = await response.clone().json();
+                errorDetails = errorData.message ? ` (${errorData.message})` : '';
+            } catch (e) {
+                // If we can't parse error JSON, continue with status code
+            }
+            
+            if (response.status === 404) {
+                throw new Error(`Location not found. Please try again.`);
+            } else if (response.status === 401) {
+                throw new Error(`Invalid API key.${errorDetails} Please verify your OpenWeatherMap API key in config.js. Make sure the key is activated (it may take 10-60 minutes after signup).`);
+            } else if (response.status === 429) {
+                throw new Error('API rate limit exceeded. Please try again later.');
+            } else {
+                throw new Error(`API error: ${response.status} ${response.statusText}${errorDetails}`);
+            }
+        }
+
+        const data = await response.json();
+        return formatCurrentWeatherData(data);
+
+    } catch (error) {
+        // Handle different error types
+        if (error.name === 'AbortError') {
+            throw new Error('Request timed out. Please check your internet connection and try again.');
+        } else if (error.name === 'TypeError' && error.message.includes('fetch')) {
+            throw new Error('Network error. Please check your internet connection.');
+        } else {
+            // Re-throw our custom errors
+            throw error;
+        }
+    }
+}
+
+/**
+ * Fetches 5-day weather forecast using coordinates
+ * @param {number} lat - Latitude
+ * @param {number} lon - Longitude
+ * @returns {Promise<Object>} Object with hourly and daily forecast arrays
+ */
+async function fetchForecastByCoords(lat, lon) {
+    // Validate input
+    if (typeof lat !== 'number' || typeof lon !== 'number' || isNaN(lat) || isNaN(lon)) {
+        throw new Error('Valid latitude and longitude are required');
+    }
+
+    // Check if API key is configured
+    if (!CONFIG.API_KEY || CONFIG.API_KEY === 'YOUR_API_KEY_HERE') {
+        throw new Error('API key not configured. Please set your OpenWeatherMap API key in config.js');
+    }
+
+    const url = `${CONFIG.API_BASE_URL}/forecast?lat=${lat}&lon=${lon}&units=${CONFIG.TEMP_UNIT}&appid=${CONFIG.API_KEY}`;
+
+    try {
+        // Create abort controller for timeout
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), CONFIG.API_TIMEOUT);
+
+        const response = await fetch(url, {
+            signal: controller.signal,
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+
+        clearTimeout(timeoutId);
+
+        // Check if response is ok
+        if (!response.ok) {
+            // Get error details from response
+            let errorDetails = '';
+            try {
+                const errorData = await response.clone().json();
+                errorDetails = errorData.message ? ` (${errorData.message})` : '';
+            } catch (e) {
+                // If we can't parse error JSON, continue with status code
+            }
+            
+            if (response.status === 404) {
+                throw new Error(`Location not found. Please try again.`);
+            } else if (response.status === 401) {
+                throw new Error(`Invalid API key.${errorDetails} Please verify your OpenWeatherMap API key in config.js. Make sure the key is activated (it may take 10-60 minutes after signup).`);
+            } else if (response.status === 429) {
+                throw new Error('API rate limit exceeded. Please try again later.');
+            } else {
+                throw new Error(`API error: ${response.status} ${response.statusText}${errorDetails}`);
+            }
+        }
+
+        const data = await response.json();
+        return formatForecastData(data);
+
+    } catch (error) {
+        // Handle different error types
+        if (error.name === 'AbortError') {
+            throw new Error('Request timed out. Please check your internet connection and try again.');
+        } else if (error.name === 'TypeError' && error.message.includes('fetch')) {
+            throw new Error('Network error. Please check your internet connection.');
+        } else {
+            // Re-throw our custom errors
+            throw error;
+        }
+    }
+}
+
+/**
  * Fetches 5-day weather forecast for a given city
  * @param {string} cityName - Name of the city to get forecast for
  * @returns {Promise<Array>} Array of forecast data objects (one per day)
@@ -337,7 +481,9 @@ if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
         searchCities,
         fetchCurrentWeather,
+        fetchCurrentWeatherByCoords,
         fetchForecast,
+        fetchForecastByCoords,
         formatCurrentWeatherData,
         formatForecastData
     };
