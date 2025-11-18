@@ -1,7 +1,4 @@
-# Campus Weather Widget
-
-## About
-Short description of the app, purpose, and tools used.
+# Campus Weather Widget by Fab-5
 
 ##  Features
 - Real-time weather
