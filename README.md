@@ -1,63 +1,61 @@
-# Project Plan (Initial Commit)
+# Campus Weather Widget
 
-## Project Overview
-- Team Name
-- Project Name
-- Tech Stack
-- Timeline
-- Goal
+## 📌 About
+Short description of the app, purpose, and tools used.
 
-## User Stories (MVP)
-1. Search for Weather
-2. Display Current Weather
-3. Show Weather Metrics
-4. 5-Day Forecast
-5. Error Handling
+## ✨ Features
+- Real-time weather
+- 5-day forecast
+- Detailed metrics
+- Search functionality
+- Responsive design
+- Error handling
+- Loading states
+- Accessibility
 
-## Nice-to-Haves
-- Geolocation
-- Unit Toggle
-- Favorite Cities
-- Dark/Light Theme
-- Weather Alerts
-- Hourly Forecast
+## 🚀 How to Run
+1. Clone repo  
+2. Get API key  
+3. Configure `config.js`  
+4. Open `index.html` or run local server  
 
-## GitHub Issues (List)
-- HTML Structure
-- CSS Styling
-- API Configuration
-- API Integration
-- UI Logic & Event Handlers
-- Current Weather Display
-- Forecast Display
-- Testing Suite
-- CI/CD Setup
-- Documentation
+## 🎯 How to Use
+- Search for a city  
+- View current weather  
+- View 5-day forecast  
+- Handle errors  
 
-## Sprint Planning
-- Sprint 1: Core Features
-- Sprint 2: Polish & Testing
+## 🧪 Tests
+- Run: `node test.js`  
+- Includes validation, formatting, errors, functionality  
+- CI/CD runs tests on PRs and pushes  
 
-## Team Roles
-- Frontend Developer
-- Backend Developer
-- UI/UX Designer
-- Tester/QA
-- Project Manager
+## 👥 Team Members
+List of team member roles + GitHub usernames.
 
-## Communication Plan
-- Daily Standups
-- Weekly Meetings
-- GitHub Workflow
+## 🛠️ Technologies
+HTML, CSS, JavaScript, OpenWeatherMap API, Git, GitHub Actions
 
-## Success Metrics
-- MVP Complete
-- Testing Coverage
-- Documentation
-- Working Demo
+## 📸 Screenshots
+- Main Interface  
+- Current Weather  
+- Forecast  
+- Mobile View  
 
-## Risk Management
-- API Issues
-- Availability Issues
-- Scope Creep
-- Technical Blockers
+## 🏆 What We Learned
+Summary of skills gained.
+
+## 🚧 Future Improvements
+List of future features (geolocation, unit toggle, alerts, etc.)
+
+## 📄 License
+UNT — Fall 2025
+
+## 🔗 Resources
+- API docs  
+- Project plan  
+- Quick start  
+- GitHub repo  
+
+## 📞 Support
+Troubleshooting steps + GitHub issues link.
