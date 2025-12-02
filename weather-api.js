@@ -351,15 +351,38 @@ async function fetchForecast(cityName) {
  * @returns {Object} Formatted weather data
  */
 function formatCurrentWeatherData(data) {
-    // Calculate dew point (approximate formula)
+    // Calculate dew point using Magnus formula
+    // Formula works with Celsius, so convert if needed
     const temp = data.main.temp;
     const humidity = data.main.humidity;
-    const dewPoint = Math.round(temp - ((100 - humidity) / 5));
+    let tempCelsius = temp;
+    
+    // Convert to Celsius if using imperial units
+    if (CONFIG.TEMP_UNIT === 'imperial') {
+        tempCelsius = (temp - 32) * 5 / 9;
+    }
+    
+    // Magnus formula constants for water
+    const a = 17.27;
+    const b = 237.7;
+    
+    // Calculate dew point in Celsius
+    const alpha = ((a * tempCelsius) / (b + tempCelsius)) + Math.log(humidity / 100.0);
+    const dewPointCelsius = (b * alpha) / (a - alpha);
+    
+    // Convert back to original unit if needed
+    let dewPoint = Math.round(dewPointCelsius);
+    if (CONFIG.TEMP_UNIT === 'imperial') {
+        dewPoint = Math.round((dewPointCelsius * 9 / 5) + 32);
+    }
     
     // Get wind direction name
     const windDeg = data.wind.deg || 0;
     const windDirections = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
     const windDirectionName = windDirections[Math.round(windDeg / 22.5) % 16];
+    
+    // Extract timezone offset (in seconds from UTC)
+    const timezoneOffset = data.timezone || 0;
     
     // Determine weather type for background
     const weatherMain = data.weather[0].main.toLowerCase();
@@ -401,6 +424,7 @@ function formatCurrentWeatherData(data) {
         date: new Date(data.dt * 1000),
         sunrise: new Date(data.sys.sunrise * 1000),
         sunset: new Date(data.sys.sunset * 1000),
+        timezone: timezoneOffset,
         weatherType: weatherType,
         weatherId: weatherId
     };

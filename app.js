@@ -365,15 +365,19 @@ currentTemp.textContent = data.temperature;
 weatherIcon.src = data.icon;
 weatherIcon.alt = data.description;
 weatherDescription.textContent = data.description;
-feelsLike.textContent = `${data.feelsLike}°C`;
+// Determine temperature unit based on config
+const tempUnit = CONFIG.TEMP_UNIT === 'imperial' ? '°F' : '°C';
+feelsLike.textContent = `${data.feelsLike}${tempUnit}`;
 humidity.textContent = `${data.humidity}%`;
 windSpeed.textContent = `${data.windSpeed.toFixed(1)} m/s`;
 visibility.textContent = data.visibility === 'N/A' ? 'N/A' : `${data.visibility} km`;
 uvIndex.textContent = data.uvIndex;
-sunrise.textContent = formatTime(data.sunrise);
-sunset.textContent = formatTime(data.sunset);
-pressure.textContent = `${data.pressure} hPa`;
-dewPoint.textContent = `${data.dewPoint}°C`;
+sunrise.textContent = formatTime(data.sunrise, data.timezone);
+sunset.textContent = formatTime(data.sunset, data.timezone);
+// Convert pressure from hPa to psi
+const pressurePsi = (data.pressure * 0.0145038).toFixed(2);
+pressure.textContent = `${pressurePsi} psi`;
+dewPoint.textContent = `${data.dewPoint}${tempUnit}`;
 // Air Quality (simulated - would need separate API)
 const aqi = calculateAQI(data);
 aqiValue.textContent = aqi.value;
@@ -482,7 +486,27 @@ day: 'numeric'
 return date.toLocaleDateString('en-US', options);
 }
 
-function formatTime(date) {
+function formatTime(date, timezoneOffset = null) {
+// If timezone offset is provided (in seconds from UTC), format in location's timezone
+if (timezoneOffset !== null && timezoneOffset !== undefined) {
+// date is a Date object created from UTC timestamp
+// Get UTC time in milliseconds
+const utcTime = date.getTime();
+// Add the location's timezone offset (convert seconds to milliseconds)
+const localTime = utcTime + (timezoneOffset * 1000);
+// Create a new Date object with the adjusted time
+// Note: This will still be interpreted in browser's timezone, so we need to format manually
+const localDate = new Date(localTime);
+// Get UTC components (which now represent the local time in the location's timezone)
+const hours = localDate.getUTCHours();
+const minutes = localDate.getUTCMinutes();
+// Format with 12-hour format
+const period = hours >= 12 ? 'PM' : 'AM';
+const displayHours = hours % 12 || 12;
+const displayMinutes = minutes.toString().padStart(2, '0');
+return `${displayHours}:${displayMinutes} ${period}`;
+}
+// Fallback to browser's local timezone if no offset provided
 const options = {
 hour: 'numeric',
 minute: '2-digit',
